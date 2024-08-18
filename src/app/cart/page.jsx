@@ -6,13 +6,19 @@ import Offer from "../components/Offer";
 import { useCart } from "../hooks/useCart";
 import { Fireworks } from "@fireworks-js/react";
 import { CheckCircle } from "lucide-react";
-
+import { useRouter } from "next/navigation";
 const Cart = () => {
-  const { cart, getTotalAmount } = useCart();
+  const router = useRouter();
+  const { cart, getTotalAmount, start } = useCart();
   const [orderPlaced, setOrderPlaced] = useState(false);
 
   const handleCheckout = () => {
     setOrderPlaced(true);
+  };
+
+  const handleContinueShopping = () => {
+    router.push("/");
+    start();
   };
 
   return (
@@ -29,6 +35,7 @@ const Cart = () => {
                 top: 0,
                 left: 0,
                 background: "transparent",
+                zIndex: "-1",
               }}
             />
             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
@@ -39,11 +46,15 @@ const Cart = () => {
             <p className="text-gray-600 mb-6">
               Thank you for your purchase. Your order will be processed shortly.
             </p>
-            <Link href="/">
-              <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
-                Continue Shopping
-              </button>
-            </Link>
+            {/* <Link href="/"> */}
+            <button
+              onClick={handleContinueShopping}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+            >
+              Continue Shopping
+            </button>
+
+            {/* </Link> */}
           </div>
         </div>
       ) : cart.length > 0 ? (

@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/app/components/Header";
 import { CartProvider } from "./hooks/useCart";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +15,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <ToastContainer> */}
         <CartProvider>
           <Header />
           <main>{children}</main>
         </CartProvider>
-        <ToastContainer />
+        <Toaster />
       </body>
     </html>
   );

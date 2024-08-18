@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -21,12 +21,12 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCart((prevCart) => [...prevCart, product]);
-    toast("Product added to cart!");
+    toast.success("Product added to cart!");
   };
 
   const removeFromCart = (productId) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-    toast("Product removed from cart!");
+    toast.remove("Product removed from cart!");
   };
 
   const isInCart = (productId) => {
@@ -36,10 +36,20 @@ export const CartProvider = ({ children }) => {
   const getTotalAmount = () => {
     return cart.reduce((total, item) => total + item.price, 0).toFixed(2);
   };
+  const start = () => {
+    setCart((prevCart) => []);
+  };
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, isInCart, getTotalAmount }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        isInCart,
+        getTotalAmount,
+        start,
+      }}
     >
       {children}
     </CartContext.Provider>
